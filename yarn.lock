@@ -3518,9 +3518,9 @@ react-addons-transition-group@^15.0.0:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-apollo@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-0.11.2.tgz#39c134b5a18854e73a15a40a7fa2aeda27212da7"
+react-apollo@0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-0.8.3.tgz#e799bdc913948bb487dfa90921b2ea8d08464816"
   dependencies:
     graphql-anywhere "^2.0.0"
     hoist-non-react-statics "^1.2.0"
@@ -3565,9 +3565,9 @@ react-tap-event-plugin@^2.0.1:
   dependencies:
     fbjs "^0.8.6"
 
-react-virtualized@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.1.0.tgz#ac022281860f832ffecaf7863c099813681be521"
+react-virtualized@8.11.4:
+  version "8.11.4"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-8.11.4.tgz#0bb94f1ecbd286d07145ce63983d0a11724522c0"
   dependencies:
     babel-runtime "^6.11.6"
     classnames "^2.2.3"

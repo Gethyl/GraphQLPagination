@@ -65,7 +65,6 @@ const MyQuery = gql`query MainQuery($first:Int!,$after:String){
  *  GraphQL  Query to be executed
  ******************************************************************************************************************/
 const configObject = {
-	name: "gqlData",
 	options: (props) => {
 		let after = props.endCursor || ""; 
 		return {
@@ -73,10 +72,11 @@ const configObject = {
 		}
 	} ,
 	force:false,
-	props:({ownProps,gqlData: { loading, mainQuery, refetch, fetchMore }})=>{
-		if (!loading) {
-			console.log("mainQuery ==> "+mainQuery)
-		}
+	props:({ownProps,data})=>{
+		console.log("DATAAAAAAA ===> ")
+		console.dir(data)
+		const  { loading, mainQuery,  fetchMore } = data
+		console.log("mainQuery ==> "+mainQuery+" <<<>>> "+ loading)
 		const loadMoreRows = ()=>{
 				return fetchMore({
 					variables:{
@@ -118,12 +118,14 @@ export  class NewsContainer extends React.Component{
    constructor(props)
    {
 	   super(props)
-	
+	//    const {loadMoreRows} = this.props
    }
 
    componentWillUnmount() {
 
    }
+
+ 
 
    render(){	
 	   console.log("PROOOOOOOOOOOOPS ===> ")
@@ -133,22 +135,24 @@ export  class NewsContainer extends React.Component{
 	   let renderChild;
 	   if (loading){
 			renderChild = <CircularProgress size={80} thickness={7} style={progressStyle} />
-		}
-		else {
-			console.log(mainQuery.totalCount)
+	   }
+	   else {
+			// console.log(mainQuery.totalCount)
+			console.dir(mainQuery)
 			renderChild= <div>
-							<button onClick={(e)=>{
+							{/*<button onClick={(e)=>{
 										loadMoreRows()
 									}}>Click to load more rows
 							</button>
 							<MaterialList>
-								{
+								{  
 									mainQuery.edges.map((edge,key)=>{
 										return <ListItem key={key} primaryText={edge.node.item}	/>
 									})
 								}
 								
-							</MaterialList>	
+							</MaterialList>	*/}
+							<NewsFeed loadMoreRows={loadMoreRows} mainQuery={mainQuery}/>
 						</div>
 		}
 

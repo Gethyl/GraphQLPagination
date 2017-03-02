@@ -2,11 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom"
 import {connect} from 'react-redux'
 
-import NewsFeed from "../components/NewsFeed"
+import ItemList from "../components/ItemList"
 
 import CircularProgress from 'material-ui/CircularProgress'
-import Divider from 'material-ui/Divider';
-import {List as MaterialList,ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider'
+import AppBar from 'material-ui/AppBar'
+import {List as MaterialList,ListItem} from 'material-ui/List'
 import {loadInitialData} from  '../actions/action'
 
 import { graphql } from 'react-apollo'
@@ -27,13 +28,6 @@ let headStyle = {
     fontFamily: "'Roboto', sans-serif",
     color: '#00BCD4',
 	textAlign:"center",	
-}
-
-let sourceStyle = {
-	fontFamily: "'Roboto', sans-serif",
-	textAlign:"right",
-	paddingRight:10,
-	color:"#90CAF9"
 }
 
 let progressStyle = {
@@ -68,10 +62,10 @@ const configObject = {
 	options: (props) => {
 		let after = props.endCursor || ""; 
 		return {
-			variables: { first: 4, after: after },
+			variables: { first: 2, after: after },
 		}
 	} ,
-	force:false,
+	force:true,
 	props:({ownProps,data})=>{
 		console.log("DATAAAAAAA ===> ")
 		console.dir(data)
@@ -111,60 +105,47 @@ const configObject = {
 
 
 /******************************************************************************************************************
- *  NewsContainer 
+ *  PaginationContainer 
  ******************************************************************************************************************/
 
-export  class NewsContainer extends React.Component{
-   constructor(props)
-   {
-	   super(props)
-	//    const {loadMoreRows} = this.props
-   }
+export  class PaginationContainer extends React.Component{
+//    constructor(props)
+//    {
+// 	   super(props)
 
-   componentWillUnmount() {
+//    }
 
-   }
+//    componentWillUnmount() {
 
- 
+//    }
 
    render(){	
 	   console.log("PROOOOOOOOOOOOPS ===> ")
 	   console.dir(this.props)
        const {dispatch,loading,mainQuery,loadMoreRows} = this.props
+	   console.dir(loadMoreRows)
 	   
 	   let renderChild;
 	   if (loading){
 			renderChild = <CircularProgress size={80} thickness={7} style={progressStyle} />
 	   }
 	   else {
-			// console.log(mainQuery.totalCount)
-			console.dir(mainQuery)
-			renderChild= <div>
-							{/*<button onClick={(e)=>{
-										loadMoreRows()
-									}}>Click to load more rows
-							</button>
-							<MaterialList>
-								{  
-									mainQuery.edges.map((edge,key)=>{
-										return <ListItem key={key} primaryText={edge.node.item}	/>
-									})
-								}
-								
-							</MaterialList>	*/}
-							<NewsFeed loadMoreRows={loadMoreRows} mainQuery={mainQuery}/>
-						</div>
+			renderChild= <ItemList loadMoreRows={loadMoreRows} mainQuery={mainQuery}/>
 		}
 
 	   return (
 		   <div>
-			   <h1>Testing Pagination.....</h1>
+			   <AppBar
+					title="Implement GraphQL Cursor Pagination on Server + Infinite Scroll using React Virtualized and Apollo on Client"
+					showMenuIconButton={false}
+				/>
+			   <Divider/>
+			   &nbsp;
 			   {renderChild}
 		   </div>
 	   )
 	}
 }
 
-const NewsContainerWithData = graphql(MyQuery,configObject)(NewsContainer)
-export default  connect(mapStateToProps)(NewsContainerWithData)
-// export default  connect(mapStateToProps)(NewsContainer)
+const PaginationContainerWithData = graphql(MyQuery,configObject)(PaginationContainer)
+export default  connect(mapStateToProps)(PaginationContainerWithData)

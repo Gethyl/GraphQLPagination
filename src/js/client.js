@@ -10,7 +10,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 
 import reducer from './reducers/reducer'
-import NewsContainer from "./containers/NewsContainer";
+import PaginationContainer from "./containers/PaginationContainer";
 
 const app = document.getElementById('app')
 
@@ -30,7 +30,7 @@ const store = createStore(
 ReactDOM.render(
 	<ApolloProvider store={store} client={client}>
 		<MuiThemeProvider>
-			<NewsContainer/>
+			<PaginationContainer/>
 		</MuiThemeProvider>
 	</ApolloProvider>
 	, app)

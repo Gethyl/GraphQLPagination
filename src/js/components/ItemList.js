@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom"
 
-import TextField from 'material-ui/TextField'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+// import TextField from 'material-ui/TextField'
+// import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {ListItem} from 'material-ui/List'
+import LinearProgress from 'material-ui/LinearProgress'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
@@ -24,7 +26,7 @@ let col6 = {
 
 let virtualizingList = []
 
-export default class NewsFeed extends React.Component{
+export default class ItemList extends React.Component{
    constructor(props)
    {
 	   super(props)
@@ -61,17 +63,17 @@ export default class NewsFeed extends React.Component{
         } 
         else {
             content = (
-                <div>Loading.....</div>       
+                // <LinearProgress mode="indeterminate" />
+                 <div>Loading.....</div>       
             )
         }
 
         return (
-            <div
+            <ListItem
                 key={key}
                 style={style}
-            >
-                {content}
-            </div>
+                primaryText={content}
+            />
         )
     }
 
@@ -79,24 +81,24 @@ export default class NewsFeed extends React.Component{
    render(){	
         const {loadMoreRows,mainQuery} = this.props
         virtualizingList = mainQuery.edges
-        console.log("Virtualizing List ============>")
-        console.dir(virtualizingList)
+
 		return (
-            <div style={{ marginLeft:"15%",}}>
+            <div style={{ marginLeft:"30%",}}>
                 <InfiniteLoader
                     isRowLoaded={this._isRowLoaded}
                     loadMoreRows={loadMoreRows}
-                    rowCount={mainQuery.totalCount-1}
+                    rowCount={mainQuery.totalCount}
                 >
                     {({ onRowsRendered, registerChild }) => (
                     <List
-                        height={300}
+                        height={500}
                         onRowsRendered={onRowsRendered}
                         ref={registerChild}
-                        rowCount={mainQuery.totalCount-1}
-                        rowHeight={20}
+                        rowCount={mainQuery.totalCount}
+                        rowHeight={40}
                         rowRenderer={this._rowRenderer}
-                        width={300}
+                        width={500}
+                        overscanRowCount={0}
                     />
                     )}
 				</InfiniteLoader>
@@ -104,22 +106,3 @@ export default class NewsFeed extends React.Component{
 		);
 	}
 }
-
-/*
-<InfiniteLoader
-                    isRowLoaded={this._isRowLoaded}
-                    loadMoreRows={this._loadMoreRows}
-                    rowCount={mainQuery.totalCount}
-                >
-                    {({ onRowsRendered, registerChild }) => (
-                    <List
-                        height={200}
-                        onRowsRendered={onRowsRendered}
-                        ref={registerChild}
-                        rowCount={mainQuery.totalCount}
-                        rowHeight={20}
-                        rowRenderer={this._rowRenderer}
-                        width={300}
-                    />
-                    )}
-				</InfiniteLoader>*/

@@ -21,6 +21,7 @@ export default class ItemList extends React.Component{
        const {loadMoreRows,mainQuery} = this.props
        this._isRowLoaded = this._isRowLoaded.bind(this)
        this._rowRenderer = this._rowRenderer.bind(this)
+       this._noRowsRenderer = this._noRowsRenderer.bind(this)
    }
 /******************************************************************************************************************
  *  Used in InfiniteLoader to track the loaded state of each row.
@@ -52,6 +53,12 @@ export default class ItemList extends React.Component{
             />
         )
     }
+/******************************************************************************************************************
+ *  When no rows are returned
+ ******************************************************************************************************************/
+    _noRowsRenderer(){
+        return <h1>No Rows returned from GraphQL fetch....</h1>
+    }
 
 /******************************************************************************************************************
  *  React render method for ItemList Component
@@ -71,6 +78,7 @@ export default class ItemList extends React.Component{
                     <List
                         height={500}
                         onRowsRendered={onRowsRendered}
+                        noRowsRenderer={this._noRowsRenderer}
                         ref={registerChild}
                         rowCount={mainQuery.totalCount}
                         rowHeight={40}

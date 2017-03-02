@@ -62,7 +62,7 @@ const configObject = {
 	options: (props) => {
 		let after = props.endCursor || ""; 
 		return {
-			variables: { first: 2, after: after },
+			variables: { first: 5, after: after },
 		}
 	} ,
 	force:true,

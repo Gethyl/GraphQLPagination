@@ -49,7 +49,7 @@ app.get('/insertdb', (req,res) => {
         if (err) console.log("Count "+err)
         else {
             let insertArray =[]
-            for(var i=count+1;i<500;i++){
+            for(var i=count+1;i<=100;i++){
                 // console.log(i)
                 insertArray.push({id:i,item:"Item "+i})
             }

@@ -11,7 +11,6 @@ import {
 
 import graphPageModel from "../mongoose/GraphqlPagination"
 
-let totalFetched = 0
 let totalCount = 0
 /******************************************************************************************************/
 /* NODES                                                                                              */
@@ -118,11 +117,6 @@ var schema = new GraphQLSchema({
                           if (err){
                             console.error("---Error "+ err)
                           }
-                          console.info(":::info::: Inside the graphPageModel find block")
-                          //<<<Tip>>> - Encoding the cursor value to Base 64 as suggested in GraphQL documentation.
-                          //let cursorBase64 = Buffer.from((result[result.length-1].id).toString()).toString('base64')
-                          totalFetched = totalFetched+result.length
-                          console.log(":::DEBUG::: Total Fetched in this round is "+totalFetched)
                           
                        }).limit(first).cursor() //<<<TIP>>> Limit is obtained from Args.first
                    
@@ -148,14 +142,14 @@ var schema = new GraphQLSchema({
                           if (endCursor){
                             let endCursorNumeric = parseInt(Buffer.from(endCursor,'base64').toString('ascii'))
                             graphPageModel.where('id').gt(endCursorNumeric).count((err,count)=>{
-                                console.log(":::DEBUG::: Has Next Page Count? "+ count)
+                                // console.log(":::DEBUG::: Has Next Page Count? "+ count)
                                 count >0 ? resolve(true):resolve(false)      
                             })   
                           }
                           else resolve(false)
                       })
                       
-                      console.info(":::info::: Cursor Ended")                     
+                      // console.info(":::info::: Cursor Ended")                     
                                                                            
                       resolve(
                         {
@@ -169,7 +163,6 @@ var schema = new GraphQLSchema({
                    })                     
                 }) 
                 let totalCountPromise = new Promise((resolve,reject)=>{
-                    console.info(":::info::: Cursor Ended")
                     if (totalCount ===0) {
                       totalCount = graphPageModel.count((err,count)=>{
                         if (err) reject(err)

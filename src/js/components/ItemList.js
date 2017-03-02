@@ -12,18 +12,6 @@ import {InfiniteLoader,AutoSizer,List} from "react-virtualized"
 
 injectTapEventPlugin()
 
-let cardStyle = {
-   //  maxWidth:"100%",
-   //  minHeight:"20%",
-     minHeight:100
-}
-
-let col6 = {
-    width: "40%",
-    float: "left",
-    padding: "15px",
-}
-
 let virtualizingList = []
 
 export default class ItemList extends React.Component{
@@ -31,31 +19,19 @@ export default class ItemList extends React.Component{
    {
 	   super(props)
        const {loadMoreRows,mainQuery} = this.props
-       this._loadMoreRows = this._loadMoreRows.bind(this)
        this._isRowLoaded = this._isRowLoaded.bind(this)
        this._rowRenderer = this._rowRenderer.bind(this)
-
-       this.state = {
-            loadedRowsMap: {}
-        }
    }
-
-   componentWillUnmount() {
-
-   }
-
+/******************************************************************************************************************
+ *  Used in InfiniteLoader to track the loaded state of each row.
+ ******************************************************************************************************************/
    _isRowLoaded ({ index }) {
         return !!virtualizingList[index];
    }
 
-   _loadMoreRows({ startIndex, stopIndex }) {
-		return loadMoreRows()
-        // .then((res)=>{
-        //     console.log("Returned Value ==>"+ res)
-        //     return res
-        // })
-   } 
-
+/******************************************************************************************************************
+ *  Used in List to render each row.
+ ******************************************************************************************************************/
    _rowRenderer({ key, index, style}) {
         let content
         if (index<virtualizingList.length) {
@@ -77,7 +53,9 @@ export default class ItemList extends React.Component{
         )
     }
 
-
+/******************************************************************************************************************
+ *  React render method for ItemList Component
+ ******************************************************************************************************************/
    render(){	
         const {loadMoreRows,mainQuery} = this.props
         virtualizingList = mainQuery.edges

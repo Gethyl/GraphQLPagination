@@ -67,18 +67,18 @@ const configObject = {
 	} ,
 	force:true,
 	props:({ownProps,data})=>{
-		console.log("DATAAAAAAA ===> ")
-		console.dir(data)
+		// console.log("DATAA ===> ")
+		// console.dir(data)
 		const  { loading, mainQuery,  fetchMore } = data
-		console.log("mainQuery ==> "+mainQuery+" <<<>>> "+ loading)
+/******************************************************************************************************************
+ *  This callback function is called to load more rows from GraphQL Server.
+ ******************************************************************************************************************/		
 		const loadMoreRows = ()=>{
 				return fetchMore({
 					variables:{
 						after:mainQuery.pageInfo.endCursor,
 					},
 					updateQuery:(previousResult,{fetchMoreResult})=> {
-						// console.log("previousResult "+ previousResult)
-						// console.log("fetchMoreResult "+ fetchMoreResult)
 						const totalCount=fetchMoreResult.data.mainQuery.totalCount
 						const newEdges=fetchMoreResult.data.mainQuery.edges
 						const pageInfo=fetchMoreResult.data.mainQuery.pageInfo
@@ -95,6 +95,9 @@ const configObject = {
 					}
 				})
 			}
+/******************************************************************************************************************
+ *  props to be passed to subsequent children.
+ ******************************************************************************************************************/
 		return {
 			loading,
 			mainQuery,
@@ -109,21 +112,8 @@ const configObject = {
  ******************************************************************************************************************/
 
 export  class PaginationContainer extends React.Component{
-//    constructor(props)
-//    {
-// 	   super(props)
-
-//    }
-
-//    componentWillUnmount() {
-
-//    }
-
    render(){	
-	   console.log("PROOOOOOOOOOOOPS ===> ")
-	   console.dir(this.props)
        const {dispatch,loading,mainQuery,loadMoreRows} = this.props
-	   console.dir(loadMoreRows)
 	   
 	   let renderChild;
 	   if (loading){

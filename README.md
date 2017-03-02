@@ -11,7 +11,7 @@ GraphQL cursor pagination example using
 2. How to write a GraphQL schema to handle Cursor pagination
 
 #### Client - React
-1. How to use Apollo Client to handle GraphQL queries.
+1. How to use Apollo Client to handle GraphQL queries
 2. How to use React Virtualized to handle Infinite Scrolling of a list. 
 ---
 
